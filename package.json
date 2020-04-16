@@ -1,0 +1,41 @@
+{
+  "name": "apollo-server-integration-testing-fastify",
+  "version": "0.0.5",
+  "description": "Test helper for writing apollo-server integration tests",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/marcoreni/apollo-server-integration-testing-fastify.git",
+  "author": "Marco Reni <reni.marco@gmail.com>",
+  "keywords": [
+    "GraphQL",
+    "Apollo",
+    "Server",
+    "Javascript",
+    "Testing",
+    "Integration Testing",
+    "Fastify"
+  ],
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "clean": "rm -rf dist/",
+    "compile": "tsc",
+    "prepublish": "yarn clean && yarn compile",
+    "dev": "tsc --watch",
+    "release": "smooth-release"
+  },
+  "dependencies": {
+    "apollo-server-fastify": "^2.12.0",
+    "fastify": "^2.13.1"
+  },
+  "devDependencies": {
+    "smooth-release": "^8.0.9",
+    "typescript": "^3.7.3"
+  },
+  "peerDependencies": {
+    "graphql": "^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0"
+  },
+  "files": [
+    "dist"
+  ]
+}
