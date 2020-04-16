@@ -3,7 +3,7 @@
 This package exports an utility function for writing apollo-server integration tests:
 
 ```js
-import { createTestClient } from 'apollo-server-integration-testing';
+import { createTestClient } from 'apollo-server-integration-testing-fastify';
 ```
 
 ## Usage
