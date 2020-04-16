@@ -21,7 +21,9 @@ const { query, mutate } = createTestClient({
   apolloServer
 });
 
-const response = await query(`{ currentUser { id } }`);
+const response = await query({
+  query: `{ currentUser { id } }`
+});
 
 expect(response.statusCode).toEqual(200);
 
@@ -44,7 +46,8 @@ const UPDATE_USER = `
   }
 `;
 
-const mutationResponse = await mutate(UPDATE_USER, {
+const mutationResponse = await mutate({
+  mutation: UPDATE_USER,
   variables: { id: 1, email: 'nancy@foo.co' }
 });
 
@@ -65,12 +68,12 @@ This allows you to test all the logic of your apollo server, including any logic
 ### Mocking the `Request` object
 
 `createTestClient` automatically mocks the `Request` object that will be passed to the `context` option of your `ApolloServer` constructor, so testing works out of the box.
-You can also extend the mocked Request object with additional keys by passing an `extendMockRequest` field to `createTestClient`:
+You can also extend the mocked Request object with additional keys by passing a `requestOptions` parameter to `createTestClient`:
 
 ```js
 const { query } = createTestClient({
   apolloServer,
-  extendMockRequest: {
+  requestOptions: {
     headers: {
       cookie: 'csrf=blablabla',
       referer: ''
@@ -81,7 +84,7 @@ const { query } = createTestClient({
 
 This is useful when your apollo server `context` option is a callback that operates on the passed in `req` key, and you want to inject data into that `req` object.
 
-As mentioned above, if you don't pass an `extendMockRequest` to `createTestClient`, we provide a default request mock object for you.
+As mentioned above, if you don't pass a `requestOptions` object to `createTestClient`, we provide a default request mock object for you.
 
 ### setOptions
 
@@ -94,7 +97,7 @@ const { query, setOptions } = createTestClient({
 
 setOptions({
   // If "request" is not specified, it's not modified
-  request: {
+  requestOptions: {
     headers: {
       cookie: 'csrf=blablabla',
       referer: ''
@@ -140,6 +143,6 @@ This package should work for consumers using `apollo-server-fastify`.
 
 To issue a new release run `yarn release`.
 
-## Acknowledgments
+## Acknowledgements
 
 This project is inspired by <https://github.com/zapier/apollo-server-integration-testing>.
