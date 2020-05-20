@@ -1,7 +1,7 @@
 {
   "name": "apollo-server-integration-testing-fastify",
   "version": "1.0.0",
-  "description": "Test helper for writing apollo-server integration tests",
+  "description": "Test helper for writing apollo-server integration tests using Fastify",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/marcoreni/apollo-server-integration-testing-fastify.git",
@@ -24,16 +24,17 @@
     "dev": "tsc --watch",
     "release": "smooth-release"
   },
-  "dependencies": {
-    "apollo-server-fastify": "^2.12.0",
-    "fastify": "^2.13.1"
-  },
   "devDependencies": {
     "smooth-release": "^8.0.9",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.3",
+    "fastify": "^2.13.1",
+    "apollo-server-fastify": "^2.13.1",
+    "graphql": "^14.6.0"
   },
   "peerDependencies": {
-    "graphql": "^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0"
+    "graphql": "^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0",
+    "apollo-server-fastify": ">= 2 || < 3",
+    "fastify": ">= 2 || < 3"
   },
   "files": [
     "dist"
