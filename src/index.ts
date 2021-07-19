@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server-fastify';
-import fastify from 'fastify';
+import fastify, { LightMyRequestResponse, InjectOptions } from 'fastify';
 import { DocumentNode, print } from 'graphql';
 
 export type StringOrAst = string | DocumentNode;
@@ -11,11 +11,11 @@ export type TestClientConfig = {
   // Extends the mocked Request object with additional data.
   // Useful when your apolloServer `context` option is a callback that operates on the passed in `req` key,
   // and you want to inject data into that `req` object.
-  requestOptions?: fastify.HTTPInjectOptions;
+  requestOptions?: InjectOptions;
 };
 
 export type SetOptionsFn = (options: {
-  requestOptions?: fastify.HTTPInjectOptions;
+  requestOptions?: InjectOptions;
 }) => void;
 
 type Query = {
@@ -36,8 +36,8 @@ type Mutation = {
 };
 
 export interface ApolloServerTestClient {
-  query: (query: Query) => Promise<fastify.HTTPInjectResponse>;
-  mutate: (mutation: Mutation) => Promise<fastify.HTTPInjectResponse>;
+  query: (query: Query) => Promise<LightMyRequestResponse>;
+  mutate: (mutation: Mutation) => Promise<LightMyRequestResponse>;
   setOptions: SetOptionsFn,
 }
 
@@ -52,11 +52,12 @@ export interface ApolloServerTestClient {
  * @param {TestClientConfig} options
  * @returns {ApolloServerTestClient}
  */
-export function createTestClient({
+export async function createTestClient({
   apolloServer,
   requestOptions = {},
-}: TestClientConfig): ApolloServerTestClient {
+}: TestClientConfig): Promise<ApolloServerTestClient> {
   const app = fastify();
+  await apolloServer.start();
   app.register(apolloServer.createHandler());
 
   let mockRequestOptions = requestOptions;
@@ -90,7 +91,7 @@ export function createTestClient({
    * @param {Query | Mutation} params
    * @returns {fastify.HTTPInjectResponse} fastify response
    */
-  const test = ({ query, mutation, ...args }: Query | Mutation): Promise<fastify.HTTPInjectResponse> => {
+  const test = ({ query, mutation, ...args }: Query | Mutation): Promise<LightMyRequestResponse> => {
     const operation = query || mutation;
 
     if (!operation || (query && mutation)) {
@@ -99,7 +100,7 @@ export function createTestClient({
       );
     }
 
-    const opts: fastify.HTTPInjectOptions = {
+    const opts: InjectOptions = {
       url: apolloServer.graphqlPath,
       method: 'POST',
       payload: {
