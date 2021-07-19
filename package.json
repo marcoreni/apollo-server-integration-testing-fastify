@@ -22,13 +22,13 @@
     "compile": "tsc",
     "prepublish": "yarn clean && yarn compile",
     "dev": "tsc --watch",
-    "release": "smooth-release"
+    "release": "np"
   },
   "devDependencies": {
     "apollo-server-fastify": "^3.0.1",
     "fastify": "^3.19.1",
     "graphql": "^15.3.0",
-    "smooth-release": "^8.0.9",
+    "np": "^7.5.0",
     "typescript": "^4.3.5"
   },
   "peerDependencies": {

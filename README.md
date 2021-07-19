@@ -91,7 +91,7 @@ As mentioned above, if you don't pass a `requestOptions` object to `createTestCl
 You can also set the `request` mocking option **after** the creation of the `test client`, which is a **cleaner** and **faster** way due not needing to create a new instance for **any** change you might want to do the `request`.
 
 ```js
-const { query, setOptions } = createTestClient({
+const { query, setOptions } = await createTestClient({
   apolloServer
 });
 
