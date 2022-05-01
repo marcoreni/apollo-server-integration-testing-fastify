@@ -34,7 +34,7 @@
   "peerDependencies": {
     "apollo-server-fastify": ">= 3",
     "fastify": ">= 3",
-    "graphql": "^15.3.0"
+    "graphql": "^15.3.0 || ^16.4.0"
   },
   "files": [
     "dist"

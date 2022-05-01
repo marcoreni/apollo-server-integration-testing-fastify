@@ -141,7 +141,7 @@ This package should work for consumers using `apollo-server-fastify`.
 
 ## Release
 
-To issue a new release run `yarn release`.
+To issue a new release run `pnpm release`.
 
 ## Acknowledgements
 
