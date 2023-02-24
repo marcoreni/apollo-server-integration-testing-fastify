@@ -1,4 +1,5 @@
-import { ApolloServer } from 'apollo-server-fastify';
+import { ApolloServer } from '@apollo/server';
+import apolloFastify from '@as-integrations/fastify';
 import fastify, { LightMyRequestResponse, InjectOptions } from 'fastify';
 import { DocumentNode, print } from 'graphql';
 
@@ -58,7 +59,7 @@ export async function createTestClient({
 }: TestClientConfig): Promise<ApolloServerTestClient> {
   const app = fastify();
   await apolloServer.start();
-  app.register(apolloServer.createHandler());
+  await app.register(apolloFastify(apolloServer));
 
   let mockRequestOptions = requestOptions;
 
@@ -101,7 +102,7 @@ export async function createTestClient({
     }
 
     const opts: InjectOptions = {
-      url: apolloServer.graphqlPath,
+      url: "/",
       method: 'POST',
       payload: {
         query: typeof operation === 'string' ? operation : print(operation),
